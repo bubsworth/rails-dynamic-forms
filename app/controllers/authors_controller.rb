@@ -25,7 +25,7 @@ class AuthorsController < ApplicationController
 
     respond_to do |format|
       if @author.save
-        format.html { redirect_to @author, notice: "Author was successfully created." }
+        format.html { redirect_to author_url(@author), notice: "Author was successfully created." }
         format.json { render :show, status: :created, location: @author }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class AuthorsController < ApplicationController
   def update
     respond_to do |format|
       if @author.update(author_params)
-        format.html { redirect_to @author, notice: "Author was successfully updated." }
+        format.html { redirect_to author_url(@author), notice: "Author was successfully updated." }
         format.json { render :show, status: :ok, location: @author }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -49,10 +49,10 @@ class AuthorsController < ApplicationController
 
   # DELETE /authors/1 or /authors/1.json
   def destroy
-    @author.destroy!
+    @author.destroy
 
     respond_to do |format|
-      format.html { redirect_to authors_path, status: :see_other, notice: "Author was successfully destroyed." }
+      format.html { redirect_to authors_url, notice: "Author was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -60,11 +60,11 @@ class AuthorsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_author
-      @author = Author.find(params.expect(:id))
+      @author = Author.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def author_params
-      params.expect(author: [ :name ])
+      params.require(:author).permit(:name)
     end
 end

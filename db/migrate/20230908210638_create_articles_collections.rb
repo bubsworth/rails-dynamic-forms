@@ -1,4 +1,4 @@
-class CreateArticlesCollections < ActiveRecord::Migration[8.0]
+class CreateArticlesCollections < ActiveRecord::Migration[7.0]
   def change
     create_table :articles_collections do |t|
       t.references :article, null: false, foreign_key: true

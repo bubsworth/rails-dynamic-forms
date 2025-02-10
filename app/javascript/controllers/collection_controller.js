@@ -1,6 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 import { get } from '@rails/request.js'
 
+
 export default class extends Controller {
 
   connect() {
@@ -11,5 +12,6 @@ export default class extends Controller {
     let author_id = event.currentTarget.value
     let url = `/articles/filter?author_id=${author_id}`
     get(url, { responseKind: "turbo-stream"})
-  }   
+  } 
+  
 }

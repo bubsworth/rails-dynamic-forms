@@ -25,7 +25,7 @@ class CollectionsController < ApplicationController
 
     respond_to do |format|
       if @collection.save
-        format.html { redirect_to @collection, notice: "Collection was successfully created." }
+        format.html { redirect_to collection_url(@collection), notice: "Collection was successfully created." }
         format.json { render :show, status: :created, location: @collection }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class CollectionsController < ApplicationController
   def update
     respond_to do |format|
       if @collection.update(collection_params)
-        format.html { redirect_to @collection, notice: "Collection was successfully updated." }
+        format.html { redirect_to collection_url(@collection), notice: "Collection was successfully updated." }
         format.json { render :show, status: :ok, location: @collection }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -49,16 +49,16 @@ class CollectionsController < ApplicationController
 
   # DELETE /collections/1 or /collections/1.json
   def destroy
-    @collection.destroy!
+    @collection.destroy
 
     respond_to do |format|
-      format.html { redirect_to collections_path, status: :see_other, notice: "Collection was successfully destroyed." }
+      format.html { redirect_to collections_url, notice: "Collection was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
-  # POST /collections/1/add_article
-  def add_article
+   # POST /collections/1/add_article
+   def add_article
     @collection.articles << Article.find(params[:article_ids]) unless @collection.articles.include?(Article.find(params[:article_ids]))
     redirect_to collection_url(@collection)
   end
@@ -71,12 +71,12 @@ class CollectionsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def collection_params
-      params.require(:collection).permit(:title, :article_ids)
+    def set_collection
+      @collection = Collection.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def collection_params
-      params.expect(collection: [ :title ])
+      params.require(:collection).permit(:title, :article_ids)
     end
 end
