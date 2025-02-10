@@ -57,6 +57,14 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # GET /articles/filter
+  def filter
+    @articles = Article.where(author_id: params[:author_id])
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_article

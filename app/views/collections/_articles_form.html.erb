@@ -1,8 +1,8 @@
-<%= form_with(url: add_article_collection_path(collection), class: "contents") do |form| %>
+<%= form_with(url: add_article_collection_path(collection), class: "contents", data: {controller: 'collection'}) do |form| %>
 
   <div class="my-5">
     <%= form.label :author %>
-    <%= form.collection_select :author, Author.all, :id, :name, {prompt: ''} %>
+    <%= form.collection_select :author, Author.all, :id, :name, {prompt: ''}, {data: {action: 'change->collection#filter_articles'}} %>
   </div>
 
   <div class="my-5">
