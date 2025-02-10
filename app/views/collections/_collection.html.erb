@@ -3,4 +3,12 @@
     <strong class="block font-medium mb-1">Title:</strong>
     <%= collection.title %>
   </p>
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Articles: </strong>
+    <% if action_name =='show' %>
+    <%= render partial: 'articles_form', locals: {collection: @collection} %>
+    <% else %>
+      <%= collection.articles.count %>
+    <% end %>
+  </p>
 </div>

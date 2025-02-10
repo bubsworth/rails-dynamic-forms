@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :collections
+  resources :collections do
+    post :add_article, on: :member
+    delete :remove_article, on: :member
+  end
   resources :articles
   resources :authors
 
