@@ -8,6 +8,10 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+Author.destroy_all
+Article.destroy_all
+Collection.destroy_all
+
 author = Author.create(name: 'Albert Einstein')
 Article.create(author: author, title: "Sobre a Teoria da Relatividade Especial")
 Article.create(author: author, title: "A Natureza da Luz: Um Experimento de Pensamento")

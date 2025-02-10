@@ -1,5 +1,5 @@
 class CollectionsController < ApplicationController
-  before_action :set_collection, only: %i[ show edit update destroy ]
+  before_action :set_collection, only: %i[ show edit update destroy add_article remove_article]
 
   # GET /collections or /collections.json
   def index
@@ -57,10 +57,22 @@ class CollectionsController < ApplicationController
     end
   end
 
+  # POST /collections/1/add_article
+  def add_article
+    @collection.articles << Article.find(params[:article_ids]) unless @collection.articles.include?(Article.find(params[:article_ids]))
+    redirect_to collection_url(@collection)
+  end
+
+  # DELETE /collections/1/remove_article
+  def remove_article
+    @collection.articles.delete(Article.find(params[:article_ids]))
+    redirect_to collection_url(@collection)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_collection
-      @collection = Collection.find(params.expect(:id))
+    def collection_params
+      params.require(:collection).permit(:title, :article_ids)
     end
 
     # Only allow a list of trusted parameters through.
